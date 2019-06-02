@@ -51,35 +51,31 @@ class ProductItem {
         `
     }
 }
+class BasketItems {
+    constructor (product, img = `https://placehold.it/200x150`){
+
+    }
+    getItem(){
+        //получение товара по его pk или id
+    }
+    getItems(){
+        //получение всех товаров корзины
+    }
+}
+
+class Basket {
+    constructor (container = '.basket'){
+    }
+    productCost(){
+        //получение суммы каждого типа товара
+    }
+    totalNumber(){
+        //получение количества товаров для текущего пользователя
+    }
+    totalAmount(){
+        //сумма всех товаров корзины для текущего пользователя
+    }
+}
+
 
 const products = new ProductsList();
-
-// const products = [
-//     {id: 1, title: 'Notebook', price: 2000},
-//     {id: 2, title: 'Mouse', price: 30},
-//     {id: 3, title: 'Keyboard', price: 55},
-//     {id: 4, title: 'Gamepad', price: 75}
-// ];
-// const renderProduct = (title, price, img = `https://placehold.it/200x150`) => {
-//     return `
-//     <div class="d-inline-flex p-2 bd-highlight">
-//         <div class="card">
-//             <img src="${img}" alt="${title}" title="${title}">
-//             <div class="card-body">
-//                 <h3 class="card-title">${title}</h3>
-//                 <p class="card-text">${price}</p>
-//                 <a href="#" class="btn btn-primary">Купить</a>
-//             </div>
-//         </div>
-//     </div>
-//     `
-// };
-// const renderPage = list => {
-//     for (let item of list){
-//             document.querySelector('.products').insertAdjacentHTML
-//             ('beforeend', renderProduct(item.title, item.price));
-//         }
-// };
-//
-//
-// renderPage(products);
