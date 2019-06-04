@@ -6,11 +6,15 @@ class ProductsList {
         this.data = [];
         this.allProducts = [];
         this.init();
+
     }
+
     init(){
         this._receiptProducts();
         this._render();
+        this._totalAmount();
     }
+
     _receiptProducts(){
         this.data = [
             {id: 1, title: 'Notebook', price: 2000},
@@ -19,6 +23,7 @@ class ProductsList {
             {id: 4, title: 'Gamepad', price: 75}
         ];
     }
+
     _render(){
         const block = document.querySelector(this.container);
         for (let item of this.data){
@@ -27,7 +32,24 @@ class ProductsList {
             block.insertAdjacentHTML('beforeend', product.render());
         }
     }
+
+    productCost(){
+        //цена товара
+            }
+    totalNumber(){
+        //получение количества товаров
+    }
+
+    _totalAmount(){
+        //сумма всех товаров
+        const block = document.querySelector('.sum');
+        let sum = 0;
+        this.data.map(el => sum += el.price);
+        block.insertAdjacentText('beforeend', sum);
+        //};
+    }
 }
+
 
 class ProductItem {
     constructor (product, img = `https://placehold.it/200x150`){
@@ -72,9 +94,9 @@ class Basket {
     totalNumber(){
         //получение количества товаров для текущего пользователя
     }
-    totalAmount(){
-        //сумма всех товаров корзины для текущего пользователя
-    }
+    // totalAmount(){
+    //     //сумма всех товаров корзины для текущего пользователя
+    // }
 }
 
 
