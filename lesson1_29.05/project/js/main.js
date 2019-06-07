@@ -1,5 +1,41 @@
 'use strict';
 
+const API = `https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses`;
+
+let getRequest = object => {
+    return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', object.url, true);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status !== 200) {
+                    reject('Error!' || xhr.statusText)
+                } else {
+                    resolve(xhr.responseText)
+                }
+            }
+        }
+    });
+};
+
+
+// Promise
+
+// let num = a => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             if(a){
+//                 const b = a + 10;
+//                 resolve(b)
+//             } else {
+//                 reject('Error!')
+//             }
+//
+//         }, 300)
+//     })
+// }
+
+
 class ProductsList {
     constructor(container = '.products'){
         this.container = container;
@@ -10,12 +46,12 @@ class ProductsList {
     }
 
     init(){
-        this._receiptProducts();
+        this._fetchProducts();
         this._render();
         this._totalAmount();
     }
 
-    _receiptProducts(){
+    _fetchProducts(){
         this.data = [
             {id: 1, title: 'Notebook', price: 2000},
             {id: 2, title: 'Mouse', price: 30},
@@ -44,9 +80,9 @@ class ProductsList {
         //сумма всех товаров
         const block = document.querySelector('.sum');
         let sum = 0;
-        this.data.map(el => sum += el.price);
+        this.allProducts.map(el => sum += el.price);
         block.insertAdjacentText('beforeend', sum);
-        //};
+        // return this.allProducts.reduce((sum, item) => sum + item.price, 0)
     }
 }
 
@@ -73,31 +109,26 @@ class ProductItem {
         `
     }
 }
-class BasketItems {
-    constructor (product, img = `https://placehold.it/200x150`){
 
-    }
-    getItem(){
-        //получение товара по его pk или id
-    }
-    getItems(){
-        //получение всех товаров корзины
-    }
-}
-
-class Basket {
-    constructor (container = '.basket'){
-    }
-    productCost(){
-        //получение суммы каждого типа товара
-    }
-    totalNumber(){
-        //получение количества товаров для текущего пользователя
-    }
-    // totalAmount(){
-    //     //сумма всех товаров корзины для текущего пользователя
-    // }
-}
+// class Basket {
+//     constructor (container = '.basket'){
+//     }
+//     productCost(){
+//         //получение суммы каждого типа товара
+//     }
+//     totalNumber(){
+//         //получение количества товаров для текущего пользователя
+//     }
+//     // totalAmount(){
+//     //     //сумма всех товаров корзины для текущего пользователя
+//     // }
+//     getItem(){
+//         //получение товара по его pk или id
+//     }
+//     getItems(){
+//         //получение всех товаров корзины
+//     }
+// }
 
 
 const products = new ProductsList();
