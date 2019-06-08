@@ -15,6 +15,7 @@ let getRequest = object => {
                 }
             }
         }
+        xhr.send()
     });
 };
 
