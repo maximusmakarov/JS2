@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Замена кавычек одинарных на двойные через регулярные выражения</title>
     <script>
+        let regexp = new RegExp('^\'|(\\s)\'|\'(\\s)|\'$','g');
 		const text = 'One: \'Hi Mary.\' Two: \'Oh, hi.\'\n' +
 			'One: \'How are you doing?\'\n' +
 			'Two: \'I\'m doing alright. How about you?\'\n' +
@@ -22,7 +23,7 @@
 			'One: \'Sure. Bye.\'';
 
         console.log('До преобразования\n', text, '\n');
-		console.log('После преобразования\n', text.replace(/'/g, '"'));
+		console.log('После преобразования\n', text.replace(regexp, '$1"$2'));
     </script>
 </head>
 <body>
