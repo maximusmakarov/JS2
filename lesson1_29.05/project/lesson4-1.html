@@ -5,6 +5,7 @@
     <title>Замена кавычек одинарных на двойные через регулярные выражения</title>
     <script>
         // let regexp = new RegExp('^\'|(\\s)\'|\'(\\s)|\'$','g'); // 1 вариант
+		// let regexp = new RegExp('(\'\\B|\\B\')','g'); // 2 вариант подсказал наставник
 		let regexp = new RegExp('(?!s\'|[a-zA-Z]\'[a-zA-Z])([\\s\\S])\'|^\'','g');
 		const text = 'One: \'Hi Mary.\' Two: \'Oh, hi.\'\n' +
 			'One: \'How are you doing?\'\n' +
@@ -25,6 +26,7 @@
 
         console.log('До преобразования\n', text, '\n');
 		// console.log('После преобразования\n', text.replace(regexp, '$1"$2')); // 1 вариант
+		// console.log('После преобразования\n', text.replace(regexp, '"')); // 2 вариант
 		console.log('После преобразования\n', text.replace(regexp, '$1"'));
     </script>
 </head>
