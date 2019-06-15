@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,27 +8,53 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<header>
-    <div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between ">
-        <form class="search-form">
-            <input class="search-field" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <div class="cart">
-            <button class="btn-cart" type="button">Корзина</button>
-            <div class="cart-block invisible"></div>
+<div id="app">
+    <header>
+        <div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between ">
+            <form class="search-form">
+                <input class="search-field" type="search" placeholder="Search" v-model="serchStr" aria-label="Search">
+<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+            </form>
+            <div class="cart">
+                <button class="btn-cart" @click="showCart" type="button">Корзина</button>
+                <div class="cart-block" v-if="invisible">
+                    <div class="cart-item" v-for="product of basket" data-id="${this.id_product}">
+                        <div class="product-bio">
+                            <img :src="img" alt="product.product_name">
+                            <div class="product-desc">
+                                <p class="product-title">{{product.product_name}}</p>
+                                <p class="product-quantity">Quantity: {{product.quantity}}</p>
+                                <p class="product-single-price"> {{product.price}} each</p>
+                            </div>
+                        </div>
+                        <div class="right-block">
+                            <p class="product-price"> </p>
+                            <button class="del-btn" data-id="">&times;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</header>
-<main>
-    <div class="d-flex justify-content-around">
-        <div class="products"></div>
-    </div>
-    <!--    <div class="basket_summary">-->
-    <!--        <p class="text-center">В каталоге товаров общей стоимостью <span class="sum"></span> руб</p>-->
-    <!--    </div>-->
-</main>
+    </header>
+    <main>
+        <div class="d-flex justify-content-around">
+            <div class="products">
+                <div :class="{invisible: product.visible === 'invisible'}" class="product-item" v-for="product of productList" :key="product.id_product">
+                    <img :src="imgCatalog" :alt="product.product_name">
+                    <div class="desc">
+                        <h3>{{product.product_name}}</h3>
+                        <p>{{product.price}}</p>
+                        <button class="buy-btn" @click="addProduct(product)">Купить</button>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+        <!--    <div class="basket_summary">-->
+        <!--        <p class="text-center">В каталоге товаров общей стоимостью <span class="sum"></span> руб</p>-->
+        <!--    </div>-->
+    </main>
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -38,6 +63,8 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 <script defer src="js/main.js"></script>
 </body>
 </html>
