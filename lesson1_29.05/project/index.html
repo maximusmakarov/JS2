@@ -12,13 +12,14 @@
     <header>
         <div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between ">
             <form class="search-form">
-                <input class="search-field" type="search" placeholder="Search" v-model="serchStr" aria-label="Search">
-<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+                <input class="search-field" type="search" placeholder="Search" v-model="searchStr" aria-label="Search">
+                <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
             </form>
             <div class="cart">
                 <button class="btn-cart" @click="showCart" type="button">Корзина</button>
-                <div class="cart-block" v-if="invisible">
-                    <div class="cart-item" v-for="product of basket" data-id="${this.id_product}">
+                <div class="cart-block" v-if="visible">
+                    <p v-if="!basket.length">Корзина пуста</p>
+                    <div class="cart-item" v-for="product of basket" :key="product.id_product">
                         <div class="product-bio">
                             <img :src="img" alt="product.product_name">
                             <div class="product-desc">
@@ -28,8 +29,8 @@
                             </div>
                         </div>
                         <div class="right-block">
-                            <p class="product-price"> </p>
-                            <button class="del-btn" data-id="">&times;</button>
+                            <p class="product-price"> ${{product.price*product.quantity}}</p>
+                            <button class="del-btn" @click="remove(product)">&times;</button>
                         </div>
                     </div>
                 </div>
@@ -39,7 +40,7 @@
     <main>
         <div class="d-flex justify-content-around">
             <div class="products">
-                <div :class="{invisible: product.visible === 'invisible'}" class="product-item" v-for="product of productList" :key="product.id_product">
+                <div :class="{visible: product.visible === 'visible'}" class="product-item" v-for="product of productList" :key="product.id_product">
                     <img :src="imgCatalog" :alt="product.product_name">
                     <div class="desc">
                         <h3>{{product.product_name}}</h3>

@@ -8,13 +8,14 @@ app = new Vue({
     el: '#app',
     data: {
         catalogUrl: `/catalogData.json`,
+        cartUrl: `/getBasket.json`,
         products: [],
+        basket: [],
+        filtered: [],
+        searchStr: '',
         imgCatalog: `https://placehold.it/200x150`,
         img: `https://placehold.it/100x50`,
-        basket: [],
-        allProducts: [],
-        serchStr: '',
-        invisible: false,
+        visible: false,
     },
     methods: {
         getJson(url) {
@@ -23,74 +24,89 @@ app = new Vue({
                 .catch(error => console.log(error))
         },
         showCart: function () {
-          this.invisible = !this.invisible;
+            this.visible = !this.visible;
         },
         startSearch: function() {
             //allProduct
         },
-        addProduct(product) {
-           // console.log(product.id_product);
-            // this.getJson(`${API}/addToBasket.json`)
-            //     .then(data => {
-            //         if(data.result){
-            //             let find = this.allProducts.find(el => el.id_product === product.id_product);
-            //             if(find){
-            //                 find.quantity++;
-            //                 Basket._updateBasket(find);
-            //             } else {
-            //                 let prod = Object.assign({quantity: 1}, product);
-            //                 this.data = [prod];
-            //                 this.render();
-            //             }
-            //         } else {
-            //             console.log('Error');
-            //         }
-            //     })
+        addProduct(product){
+            this.getJson(`${API}/addToBasket.json`)
+                .then(data => {
+                    if(data.result){
+                        let find = this.basket.find(el => el.id_product === product.id_product);
+                        if(find){
+                            find.quantity++
+                        } else {
+                            let prod = Object.assign({quantity: 1}, product);
+                            this.basket.push(prod);
+                        }
+                    } else {
+                        console.log('error!')
+                    }
+                })
+        },
+        remove(product){
+            this.getJson(`${API}/deleteFromBasket.json`)
+                .then(data =>{
+                    if (data.result){
+                        if(product.quantity > 1){
+                            product.quantity--
+                        } else {
+                            this.basket.splice(this.basket.indexOf(product), 1);
+                        }
+                    }else{
+                        console.log('error!')
+                    }
+                })
+        },
+        filter(){
+            let regexp = new RegExp(this.searchStr, 'i');
+            this.filtered = this.products.filter(el => regexp.test(el.product_name));
         }
     },
     mounted() {
+        this.getJson(`${API + this.cartUrl}`)
+            .then(data => {
+                for (let el of data.contents) {
+                    this.basket.push(el);
+                }
+            });
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
                 for (let el of data) {
-                    el.quantity = 1;
+                    // el.quantity = 1;
                     this.products.push(el);
+                    this.filtered.push(el);
                 }
             });
         this.getJson(`getProducts.json`)
             .then(data => {
                 for (let el of data) {
-                    el.quantity = 1;
+                    // el.quantity = 1;
                     this.products.push(el);
+                    this.filtered.push(el);
                 }
-            });
-        this.getJson(`${API + this.catalogUrl}`)
-            .then(data => {
-                for (let el of data) {
-                    el.quantity = 1;
-                    this.basket.push(el);
-                }
-            });
-        this.addProduct()
-    },
+            })
+        },
     watch: {
-      serchStr: function () {
-          if (this.serchStr !== '') {
-            this.products.forEach(el => {
-                let _name = el.product_name.toLowerCase();
-                let _searchStr = this.serchStr.toLowerCase();
-                // console.log(_name.indexOf(_searchStr) >= 0);
-                if(_name.indexOf(_searchStr) >= 0){
+        searchStr: function () {
+            if (this.searchStr !== '') {
+                this.products.forEach(el => {
+                    let _name = el.product_name.toLowerCase();
+                    let _searchStr = this.searchStr.toLowerCase();
+                    // console.log(_name.indexOf(_searchStr) >= 0);
+                    if(_name.indexOf(_searchStr) >= 0){
+                        el.visible = 'visible';
+                    } else {
+                        el.visible = 'visible';
+                    }
+                });
+            }else {
+                this.products.forEach(el => {
                     el.visible = 'visible';
-                } else {
-                    el.visible = 'invisible';
-                }
-            });
-          }else {
-              this.products.forEach(el => {
-                  el.visible = 'visible';
-            });
-          }
-      }
+                });
+            }
+        }
     },
     computed: {
         productList: function () {
@@ -157,9 +173,9 @@ app = new Vue({
 //         this.allProducts.forEach(el => {
 //             const block = document.querySelector(`.product-item[data-id="${el.id_product}"]`);
 //             if(!this.filtered.includes(el)){
-//                 block.classList.add('invisible');
+//                 block.classList.add('visible');
 //             } else {
-//                 block.classList.remove('invisible')
+//                 block.classList.remove('visible')
 //             }
 //         })
 //     }
@@ -288,7 +304,7 @@ app = new Vue({
 //             }
 //         });
 //         document.querySelector('.btn-cart').addEventListener('click', () => {
-//             document.querySelector(this.container).classList.toggle('invisible');
+//             document.querySelector(this.container).classList.toggle('visible');
 //         })
 //     }
 // }
