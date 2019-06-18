@@ -17,7 +17,7 @@
             </form>
             <div class="cart">
                 <button class="btn-cart" @click="showCart" type="button">Корзина</button>
-                <div class="cart-block" v-if="visible">
+                <div class="cart-block" v-if="invisible">
                     <p v-if="!basket.length">Корзина пуста</p>
                     <div class="cart-item" v-for="product of basket" :key="product.id_product">
                         <div class="product-bio">
@@ -25,7 +25,7 @@
                             <div class="product-desc">
                                 <p class="product-title">{{product.product_name}}</p>
                                 <p class="product-quantity">Quantity: {{product.quantity}}</p>
-                                <p class="product-single-price"> {{product.price}} each</p>
+                                <p class="product-single-price"> {{product.price}} $ each</p>
                             </div>
                         </div>
                         <div class="right-block">
@@ -40,7 +40,7 @@
     <main>
         <div class="d-flex justify-content-around">
             <div class="products">
-                <div :class="{visible: product.visible === 'visible'}" class="product-item" v-for="product of productList" :key="product.id_product">
+                <div :class="{invisible: product.visible === 'invisible'}" class="product-item" v-for="product of productList" :key="product.id_product">
                     <img :src="imgCatalog" :alt="product.product_name">
                     <div class="desc">
                         <h3>{{product.product_name}}</h3>

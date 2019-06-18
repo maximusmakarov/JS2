@@ -15,7 +15,7 @@ app = new Vue({
         searchStr: '',
         imgCatalog: `https://placehold.it/200x150`,
         img: `https://placehold.it/100x50`,
-        visible: false,
+        invisible: false,
     },
     methods: {
         getJson(url) {
@@ -24,7 +24,7 @@ app = new Vue({
                 .catch(error => console.log(error))
         },
         showCart: function () {
-            this.visible = !this.visible;
+            this.invisible = !this.invisible;
         },
         startSearch: function() {
             //allProduct
@@ -59,10 +59,10 @@ app = new Vue({
                     }
                 })
         },
-        filter(){
-            let regexp = new RegExp(this.searchStr, 'i');
-            this.filtered = this.products.filter(el => regexp.test(el.product_name));
-        }
+        // filter(){
+        //     let regexp = new RegExp(this.searchStr, 'i');
+        //     this.filtered = this.products.filter(el => regexp.test(el.product_name));
+        // }
     },
     mounted() {
         this.getJson(`${API + this.cartUrl}`)
@@ -76,7 +76,7 @@ app = new Vue({
                 for (let el of data) {
                     // el.quantity = 1;
                     this.products.push(el);
-                    this.filtered.push(el);
+                    // this.filtered.push(el);
                 }
             });
         this.getJson(`getProducts.json`)
@@ -84,10 +84,10 @@ app = new Vue({
                 for (let el of data) {
                     // el.quantity = 1;
                     this.products.push(el);
-                    this.filtered.push(el);
+                    // this.filtered.push(el);
                 }
             })
-        },
+    },
     watch: {
         searchStr: function () {
             if (this.searchStr !== '') {
@@ -98,7 +98,7 @@ app = new Vue({
                     if(_name.indexOf(_searchStr) >= 0){
                         el.visible = 'visible';
                     } else {
-                        el.visible = 'visible';
+                        el.visible = 'invisible';
                     }
                 });
             }else {
@@ -173,9 +173,9 @@ app = new Vue({
 //         this.allProducts.forEach(el => {
 //             const block = document.querySelector(`.product-item[data-id="${el.id_product}"]`);
 //             if(!this.filtered.includes(el)){
-//                 block.classList.add('visible');
+//                 block.classList.add('invisible');
 //             } else {
-//                 block.classList.remove('visible')
+//                 block.classList.remove('invisible')
 //             }
 //         })
 //     }
@@ -304,7 +304,7 @@ app = new Vue({
 //             }
 //         });
 //         document.querySelector('.btn-cart').addEventListener('click', () => {
-//             document.querySelector(this.container).classList.toggle('visible');
+//             document.querySelector(this.container).classList.toggle('invisible');
 //         })
 //     }
 // }
