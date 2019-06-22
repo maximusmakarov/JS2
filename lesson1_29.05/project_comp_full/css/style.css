@@ -108,12 +108,12 @@ div.card {
 }
 .error-msg {
     padding: 30px 20px;
-    background-color: red;
-    color: white;
+    background-color: orangered;
+    color: black;
     position: relative;
 }
 .error-block {
-    background-color: rgba(0,0,0, .5);
+    background-color: rgba(0,0,0, .2);
     justify-content: center;
     display: flex;
     position: absolute;
