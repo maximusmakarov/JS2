@@ -2,7 +2,6 @@
 
 const API = `https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses`;
 
-
 let app;
 app = new Vue({
     el: '#app',
@@ -11,7 +10,7 @@ app = new Vue({
         cartUrl: `/getBasket.json`,
         products: [],
         basket: [],
-        filtered: [],
+        // filtered: [],
         searchStr: '',
         imgCatalog: `https://placehold.it/200x150`,
         img: `https://placehold.it/100x50`,

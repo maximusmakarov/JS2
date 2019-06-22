@@ -11,48 +11,25 @@
 <div id="app">
     <header>
         <div class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between ">
-            <search>
+<!--            <search>-->
 
-            </search>
+<!--            </search>-->
             <form class="search-form">
                 <input class="search-field" type="search" placeholder="Search" v-model="searchStr" aria-label="Search">
                 <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
             </form>
             <div class="cart">
                 <button class="btn-cart" @click="showCart" type="button">Корзина</button>
-                <div class="cart-block" v-if="invisible">
-                    <p v-if="!basket.length">Корзина пуста</p>
-                    <div class="cart-item" v-for="product of basket" :key="product.id_product">
-                        <div class="product-bio">
-                            <img :src="img" alt="product.product_name">
-                            <div class="product-desc">
-                                <p class="product-title">{{product.product_name}}</p>
-                                <p class="product-quantity">Quantity: {{product.quantity}}</p>
-                                <p class="product-single-price"> {{product.price}} $ each</p>
-                            </div>
-                        </div>
-                        <div class="right-block">
-                            <p class="product-price"> ${{product.price*product.quantity}}</p>
-                            <button class="del-btn" @click="remove(product)">&times;</button>
-                        </div>
-                    </div>
-                </div>
+                <basket :basket="basket"
+                        :img="img"
+                        :visibility="showCart"
+                        @remove="remove"></basket>
             </div>
         </div>
     </header>
     <main>
         <div class="d-flex justify-content-around">
-            <div class="products">
-                <div :class="{invisible: product.visible === 'invisible'}" class="product-item" v-for="product of productList" :key="product.id_product">
-                    <img :src="imgCatalog" :alt="product.product_name">
-                    <div class="desc">
-                        <h3>{{product.product_name}}</h3>
-                        <p>{{product.price}}</p>
-                        <button class="buy-btn" @click="addProduct(product)">Купить</button>
-                    </div>
-                </div>
-
-            </div>
+            <products :products="productList" :img="imgCatalog" @add-product="addProduct"></products>
         </div>
     </main>
 </div>
@@ -65,7 +42,8 @@
 <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="js/search_component.js"></script>
+<script src="js/basket_component.js"></script>
+<script src="js/product_component.js"></script>
 <script defer src="js/main.js"></script>
 </body>
 </html>
