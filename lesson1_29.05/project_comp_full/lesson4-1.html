@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Замена кавычек одинарных на двойные через регулярные выражения</title>
+    <script>
+        // let regexp = new RegExp('^\'|(\\s)\'|\'(\\s)|\'$','g'); // 1 вариант
+		// let regexp = new RegExp('(\'\\B|\\B\')','g'); // 2 вариант подсказал наставник
+		let regexp = new RegExp('(?!s\'|[a-zA-Z]\'[a-zA-Z])([\\s\\S])\'|^\'','g');
+		const text = 'One: \'Hi Mary.\' Two: \'Oh, hi.\'\n' +
+			'One: \'How are you doing?\'\n' +
+			'Two: \'I\'m doing alright. How about you?\'\n' +
+			'    One: \'Not too bad. The weather is great isn\'t it?\'\n' +
+			'    Two: \'Yes. It\'s absolutely beautiful today.\'\n' +
+			'One: \'I wish it was like this more frequently.\'\n' +
+			'Two: \'Me too.\'\n' +
+			'One: \'So where are you going now?\'\n' +
+			'Two: \'I\'m going to meet a friend of mine at the department store.\'\n' +
+			'One: \'Going to do a little shopping?\'\n' +
+			'Two: \'Yeah, I have to buy some presents for my parents.\'\n' +
+			'One: \'What\'s the occasion?\'\n' +
+			'    Two: \'It\'s their anniversary.\'\n' +
+			'One: \'That\'s great. Well, you better get going. You don\'t want to be late.\'\n' +
+			'Two: \'I\'ll see you next time.\'\n' +
+			'One: \'Sure. Bye.\'';
+
+        console.log('До преобразования\n', text, '\n');
+		// console.log('После преобразования\n', text.replace(regexp, '$1"$2')); // 1 вариант
+		// console.log('После преобразования\n', text.replace(regexp, '"')); // 2 вариант
+		console.log('После преобразования\n', text.replace(regexp, '$1"'));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

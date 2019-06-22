@@ -1,7 +1,7 @@
 Vue.component('basket', {
-	props: ['basket', 'img', 'visibility'],
+	props: ['basket', 'img', 'invisible'],
 	template: `
-			<div class="cart-block" v-if="visibility">
+			<div class="cart-block" v-if="invisible">
 				<p v-if="!basket.length">Корзина пуста</p>
 				<cart-item 
 				v-for="product of basket"
